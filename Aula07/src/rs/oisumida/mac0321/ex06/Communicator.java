@@ -1,5 +1,6 @@
 package rs.oisumida.mac0321.ex06;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Communicator {
@@ -89,5 +90,9 @@ public class Communicator {
 
 	public static void divider() {
 		System.out.println("---------------------------------");
+	}
+
+	public static Object askWhich(String prompt, ArrayList<Object> opts) {
+		return Communicator.askWhich(prompt, opts.toArray());
 	}
 }

@@ -4,6 +4,10 @@ public class ItemStack {
   private final Item item;
   private int amount;
   
+  public int getAmount() {
+	  return this.amount;
+  }
+  
   public ItemStack(Item item, int amount) {
     this.item = item;
     this.amount = amount;

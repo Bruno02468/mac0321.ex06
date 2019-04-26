@@ -35,8 +35,14 @@ public class GameMain {
 		}
 		if (act == Action.SWITCH) {
 			Pokemon pokemon = (Pokemon) Communicator.askWhich(
-					player.toString()+", esolha um pokémon:", roster);
-			
+					player.toString()+", esolha um pokémon:", player.getRoster());
+		}
+		if (act == Action.ITEM) {
+			while (true) {
+				ItemStack item = (ItemStack) Communicator.askWhich(
+					player.toString()+", esolha um item:", player.bag.toArray());
+				if (item.
+			}
 		}
 	}
 
