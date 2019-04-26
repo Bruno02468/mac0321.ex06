@@ -33,18 +33,22 @@ public class Communicator {
 	}
 	
 	public static int getInt(int min, int max) {
-		System.out.print(ANSI_RESET+"> ");
 		while (true) {
-			int val = scanner.nextInt();
-			if (min <= val && val <= max) {
-				return val;
+			System.out.print(ANSI_RESET+"> ");
+			try {
+				int val = scanner.nextInt();
+				if (min <= val && val <= max) {
+					return val;
+				}
+			} catch (Exception e) {
+				scanner.nextLine();
 			}
 			System.out.println(ANSI_BOLD+ANSI_RED+"Opção Inválida"+ANSI_RESET);
 		}
 	}
 	public static boolean getBool() {
-		System.out.print(ANSI_RESET+"> ");
 		while (true) {
+			System.out.print(ANSI_RESET+"> ");
 			String val = scanner.next().replaceAll("\\s", "").toUpperCase();
 			if (val.equals("S") || val.equals("Y")) {
 				return true;
@@ -56,8 +60,8 @@ public class Communicator {
 		}
 	}
 	public static String getString() {
-		System.out.print(ANSI_RESET+"> ");
 		while (true) {
+			System.out.print(ANSI_RESET+"> ");
 			String val = scanner.next().replaceAll("\\s", "");
 			if (val.length() != 0) {
 				return val;
@@ -81,5 +85,9 @@ public class Communicator {
 	}
 	public static void passMessage(String str) {
 		System.out.println(str);
+	}
+
+	public static void divider() {
+		System.out.println("---------------------------------");
 	}
 }

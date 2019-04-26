@@ -18,9 +18,22 @@ public class GameMain {
 		Communicator.passMessage("Olá, "+P1.toString());
 		P2 = getPlayerInfo(2);
 		Communicator.passMessage("Olá, "+P2.toString());
+		
+		while (true) {
+			this.playerRun(P1);
+			this.playerRun(P2);
+		}
 	}
 	
+	private void playerRun(Trainer player) {
+		Communicator.divider();
+		Action act = (Action) Communicator.askWhich(
+				player.toString()+", esolha uma opção:", Action.List);
+		Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
+	}
+
 	Trainer getPlayerInfo(int num) {
+		Communicator.divider();
 		Gender gender = (Gender) Communicator.askWhich(
 				"Jogador(a) "+Integer.toString(num)+", você é:", Gender.List);
 		Communicator.passMessage("Seu nome? ");

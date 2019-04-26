@@ -9,6 +9,6 @@ public class Trainer {
 		this.gender = gender;
 	}
 	public String toString() {
-		return this.gender.getColor() + this.name + " " + this.gender.toSymbol() + Communicator.ANSI_RESET;
+		return this.gender.getColor() + this.name + Communicator.ANSI_RESET;
 	}
 }
