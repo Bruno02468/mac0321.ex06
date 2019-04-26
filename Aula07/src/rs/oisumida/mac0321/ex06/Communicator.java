@@ -45,25 +45,39 @@ public class Communicator {
 	public static boolean getBool() {
 		System.out.print(ANSI_RESET+"> ");
 		while (true) {
-			String val = scanner.next().replaceAll("\\s", "");
-			System.out.println(val);
-			if (val.equals("S") || val == "s" || val == "Y" || val == "y") {
+			String val = scanner.next().replaceAll("\\s", "").toUpperCase();
+			if (val.equals("S") || val.equals("Y")) {
 				return true;
 			}
-			if (val.equals("N") || val == "n") {
+			if (val.equals("N")) {
 				return false;
 			}
 			System.out.println(ANSI_BOLD+ANSI_RED+"Opção Inválida"+ANSI_RESET);
 		}
 	}
+	public static String getString() {
+		System.out.print(ANSI_RESET+"> ");
+		while (true) {
+			String val = scanner.next().replaceAll("\\s", "");
+			if (val.length() != 0) {
+				return val;
+			}
+			System.out.println(ANSI_BOLD+ANSI_RED+"Opção Inválida"+ANSI_RESET);
+		}
+	}
 	public static Object askWhich(Object opts[]) {
-		System.out.println("Escolha uma opção:");
+		return Communicator.askWhich("Escolha uma opção:", opts);
+	}
+	public static Object askWhich(String prompt, Object opts[]) {
+		System.out.println(prompt);
 		for (int i=1; i <= opts.length; i++) {
 			System.out.print("[");
 			System.out.print(i);
-			System.out.print("] "+opts[i].toString());
+			System.out.println("] "+opts[i-1].toString());
 		}
-		return Communicator.getInt(1, opts.length);
+		int pos = Communicator.getInt(1, opts.length);
+		pos -= 1;
+		return opts[pos];
 	}
 	public static void passMessage(String str) {
 		System.out.println(str);
