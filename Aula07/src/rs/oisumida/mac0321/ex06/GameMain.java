@@ -15,7 +15,9 @@ public class GameMain {
 		}
 		
 		P1 = getPlayerInfo(1);
+		Communicator.passMessage("Olá, "+P1.toString());
 		P2 = getPlayerInfo(2);
+		Communicator.passMessage("Olá, "+P2.toString());
 	}
 	
 	Trainer getPlayerInfo(int num) {
