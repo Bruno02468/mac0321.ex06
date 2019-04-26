@@ -92,7 +92,8 @@ public class Communicator {
 		System.out.println("---------------------------------");
 	}
 
-	public static Object askWhich(String prompt, ArrayList<Object> opts) {
-		return Communicator.askWhich(prompt, opts.toArray());
+	@SuppressWarnings("unchecked")
+	public static <T> Object askWhich(String prompt, ArrayList<T> opts) {
+		return (T) Communicator.askWhich(prompt, opts.toArray());
 	}
 }
