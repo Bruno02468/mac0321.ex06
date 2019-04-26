@@ -12,8 +12,8 @@ public class HealingItem extends Item {
   }
 
   @Override
-  public void applyTo(Pokemon target) {
-    target.heal(healing);
+  public boolean applyTo(Pokemon target) {
+    return target.heal(healing);
   }
 
 }

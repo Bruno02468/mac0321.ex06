@@ -20,6 +20,11 @@ public class StatusEffect {
     return name;
   }
   
+  @Override
+  public String toString() {
+    return name;
+  }
+  
   public String getMessage() {
     return message;
   }

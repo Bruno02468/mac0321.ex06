@@ -13,5 +13,14 @@ public abstract class Item {
     return name;
   }
   
-  public abstract void applyTo(Pokemon target);
+  @Override
+  public String toString() {
+    return name;
+  }
+  
+  public boolean equals(Item other) {
+    return name.equals(other.getName());
+  }
+  
+  public abstract boolean applyTo(Pokemon target);
 }
