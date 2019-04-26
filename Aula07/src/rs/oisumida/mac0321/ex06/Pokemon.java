@@ -9,13 +9,12 @@ public class Pokemon {
   private Gender gender;
   private ArrayList<StatusEffect> effects;
   private Move moves[];
-  private boolean fainted;
   public final int attack, special_attack, defense, special_defense, speed;
   private Type types[];
   
   public Pokemon(String name, int max_hp, int exp, int level, int hp,
       Gender gender, ArrayList<StatusEffect> effects, Move moves[],
-      boolean fainted, int a, int sa, int d, int sd, int spd, Type types[]) {
+      int a, int sa, int d, int sd, int spd, Type types[]) {
     this.name = name;
     this.max_hp = max_hp;
     this.hp = hp;
@@ -24,7 +23,6 @@ public class Pokemon {
     this.gender = gender;
     this.effects = effects;
     this.moves = moves;
-    this.fainted = fainted;
     this.attack = a;
     this.special_attack = sa;
     this.defense = d;
@@ -62,19 +60,19 @@ public class Pokemon {
   }
 
   public boolean isFainted() {
-    return fainted;
+    return hp <= 0;
   }
 
   public Type[] getTypes() {
     return types;
   }
 
-  public void addMovePP(int move_number, int pp) {
+  public boolean addMovePP(int move_number, int pp) {
     int prev_pp = moves[move_number].getPP();
     if (prev_pp == moves[move_number].base_pp) {
       Communicator.passMessage("O ataque " + moves[move_number].getName()
           + " já estava com PP cheio!");
-      return;
+      return false;
     }
     int novo = Math.min(moves[move_number].base_pp, prev_pp + pp);
     moves[move_number].setPP(novo);
@@ -82,16 +80,18 @@ public class Pokemon {
     Communicator.passMessage("O ataque " + moves[move_number].getName()
         + " recebeu " + delta + " PP, e está com " + novo + "/"
         + moves[move_number].base_pp + "PP!");
+    return true;
   }
 
-  public void heal(int healing) {
+  public boolean heal(int healing) {
     if (hp == max_hp) {
       Communicator.passMessage("Esse Pokemon já estava com HP cheio!");
-      return;
+      return false;
     }
     int prev = hp;
     this.hp = Math.min(max_hp, hp + healing);
     int delta = hp - prev;
     Communicator.passMessage(name + " foi curado em " + delta + " HP!");
+    return true;
   }
 }

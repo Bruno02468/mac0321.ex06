@@ -17,15 +17,19 @@ public class PPRestoringItem extends Item {
   }
 
   @Override
-  public void applyTo(Pokemon target) {
+  public boolean applyTo(Pokemon target) {
+    boolean result = false;
     if (every) {
-      int move_number = 0;
-      for (Move m : target.getMoves()) {
-        target.addMovePP(move_number, pp);
+      for (int move_number = 0; move_number < target.getMoves().length;
+          move_number++) {
+        result |= target.addMovePP(move_number, pp);
       }
     } else {
       Move m = (Move) Communicator.askWhich(target.getMoves());
+      int index = java.util.Arrays.asList(target.getMoves()).indexOf(m);
+      result |= target.addMovePP(index, pp);
     }
+    return result;
   }
 
 }
