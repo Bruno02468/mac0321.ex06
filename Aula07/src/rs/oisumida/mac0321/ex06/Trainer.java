@@ -6,8 +6,8 @@ public class Trainer {
 	private String name;
 	private Gender gender;
 	private int money;
-	ArrayList<Pokemon> roster;
-	ArrayList<ItemStack> bag;
+	private ArrayList<Pokemon> roster;
+	private ArrayList<ItemStack> bag;
 	
 	public Trainer(String name, Gender gender) {
 	  this(name, gender, 1000);
