@@ -17,4 +17,16 @@ public class Move {
     this.effect = effect;
     this.effect_chance = effect_chance;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getPP() {
+    return pp;
+  }
+
+  public void setPP(int pp) {
+    this.pp = pp;
+  }
 }

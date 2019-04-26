@@ -70,11 +70,25 @@ public class Pokemon {
   }
 
   public void addMovePP(int move_number, int pp) {
-    // TODO Auto-generated method stub
-    
+    int prev_pp = moves[move_number].getPP();
+    if (prev_pp == moves[move_number].base_pp) {
+      Communicator.passMessage("O ataque " + moves[move_number].getName()
+          + " já estava com PP cheio!");
+      return;
+    }
+    int novo = Math.min(moves[move_number].base_pp, prev_pp + pp);
+    moves[move_number].setPP(novo);
+    int delta = novo - prev_pp;
+    Communicator.passMessage("O ataque " + moves[move_number].getName()
+        + " recebeu " + delta + " PP, e está com " + novo + "/"
+        + moves[move_number].base_pp + "PP!");
   }
 
   public void heal(int healing) {
+    if (hp == max_hp) {
+      Communicator.passMessage("Esse Pokemon já estava com HP cheio!");
+      return;
+    }
     int prev = hp;
     this.hp = Math.min(max_hp, hp + healing);
     int delta = hp - prev;
