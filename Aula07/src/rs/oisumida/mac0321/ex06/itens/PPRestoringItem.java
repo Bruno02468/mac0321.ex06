@@ -1,5 +1,6 @@
 package rs.oisumida.mac0321.ex06.itens;
 
+import rs.oisumida.mac0321.ex06.Communicator;
 import rs.oisumida.mac0321.ex06.Item;
 import rs.oisumida.mac0321.ex06.Move;
 import rs.oisumida.mac0321.ex06.Pokemon;
@@ -23,7 +24,7 @@ public class PPRestoringItem extends Item {
         target.addMovePP(move_number, pp);
       }
     } else {
-      Move m = Communicator.askWhich(target.getMoves());
+      Move m = (Move) Communicator.askWhich(target.getMoves());
     }
   }
 
