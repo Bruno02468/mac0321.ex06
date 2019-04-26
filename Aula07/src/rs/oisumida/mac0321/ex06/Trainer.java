@@ -4,7 +4,7 @@ public class Trainer {
 	private String name;
 	private Gender gender;
 	
-	Trainer(String name, Gender gender) {
+	public Trainer(String name, Gender gender) {
 		this.name = name;
 		this.gender = gender;
 	}
