@@ -8,12 +8,12 @@ public class Pokemon {
   private int exp, level, hp;
   private Gender gender;
   private ArrayList<StatusEffect> effects;
-  private Move moves[];
+  private ArrayList<Move> moves;
   public final int attack, special_attack, defense, special_defense, speed;
   private Type types[];
   
   public Pokemon(String name, int max_hp, int exp, int level, int hp,
-      Gender gender, ArrayList<StatusEffect> effects, Move moves[],
+      Gender gender, ArrayList<StatusEffect> effects,
       int a, int sa, int d, int sd, int spd, Type types[]) {
     this.name = name;
     this.max_hp = max_hp;
@@ -22,7 +22,6 @@ public class Pokemon {
     this.level = level;
     this.gender = gender;
     this.effects = effects;
-    this.moves = moves;
     this.attack = a;
     this.special_attack = sa;
     this.defense = d;
@@ -55,7 +54,7 @@ public class Pokemon {
     return effects;
   }
 
-  public Move[] getMoves() {
+  public ArrayList<Move> getMoves() {
     return moves;
   }
 
@@ -93,5 +92,11 @@ public class Pokemon {
     int delta = hp - prev;
     Communicator.passMessage(name + " foi curado em " + delta + " HP!");
     return true;
+  }
+  
+  public Move
+  
+  public void attack(Pokemon target, Move m) {
+    
   }
 }
