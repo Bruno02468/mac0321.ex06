@@ -26,7 +26,15 @@ public class Trainer {
   public int getMoney() {
     return money;
   }
-
+  
+  public ArrayList<Pokemon> getRoster() {
+    return roster;
+  }
+  
+  public ArrayList<ItemStack> getBag() {
+    return bag;
+  }
+  
   public void setMoney(int money) {
     this.money = money;
   }
