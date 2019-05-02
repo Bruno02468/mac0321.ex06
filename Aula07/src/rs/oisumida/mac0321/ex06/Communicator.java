@@ -1,5 +1,6 @@
 package rs.oisumida.mac0321.ex06;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Communicator {
@@ -89,5 +90,15 @@ public class Communicator {
 
 	public static void divider() {
 		System.out.println("---------------------------------");
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Object askWhich(String prompt, ArrayList<T> opts) {
+		return (T) Communicator.askWhich(prompt, opts.toArray());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> Object askWhichArrayList(String prompt, ArrayList<T> opts) {
+		return (T) Communicator.askWhich(prompt, opts.toArray());
 	}
 }

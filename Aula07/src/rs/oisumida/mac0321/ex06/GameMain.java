@@ -30,6 +30,13 @@ public class GameMain {
 		Action act = (Action) Communicator.askWhich(
 				player.toString()+", esolha uma opção:", Action.List);
 		Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
+		if (act == Action.FLEE) {
+			return;
+		}
+		if (act == Action.SWITCH) {
+			Pokemon pokemon = (Pokemon) Communicator.askWhich(
+					player.toString()+", esolha um pokémon:", player.getRoster());
+		}
 	}
 
 	Trainer getPlayerInfo(int num) {
