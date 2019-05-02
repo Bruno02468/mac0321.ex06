@@ -1,6 +1,7 @@
 package rs.oisumida.mac0321.ex06;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Pokemon {
   private String name;
@@ -67,18 +68,18 @@ public class Pokemon {
   }
 
   public boolean addMovePP(int move_number, int pp) {
-    int prev_pp = moves[move_number].getPP();
-    if (prev_pp == moves[move_number].base_pp) {
-      Communicator.passMessage("O ataque " + moves[move_number].getName()
+    int prev_pp = moves.get(move_number).getPP();
+    if (prev_pp == moves.get(move_number).base_pp) {
+      Communicator.passMessage("O ataque " + moves.get(move_number).getName()
           + " já estava com PP cheio!");
       return false;
     }
-    int novo = Math.min(moves[move_number].base_pp, prev_pp + pp);
-    moves[move_number].setPP(novo);
+    int novo = Math.min(moves.get(move_number).base_pp, prev_pp + pp);
+    moves.get(move_number).setPP(novo);
     int delta = novo - prev_pp;
-    Communicator.passMessage("O ataque " + moves[move_number].getName()
+    Communicator.passMessage("O ataque " + moves.get(move_number).getName()
         + " recebeu " + delta + " PP, e está com " + novo + "/"
-        + moves[move_number].base_pp + "PP!");
+        + moves.get(move_number).base_pp + "PP!");
     return true;
   }
 
@@ -90,13 +91,75 @@ public class Pokemon {
     int prev = hp;
     this.hp = Math.min(max_hp, hp + healing);
     int delta = hp - prev;
-    Communicator.passMessage(name + " foi curado em " + delta + " HP!");
+    Communicator.passMessage(name + " recuperou " + delta + " HP!");
     return true;
   }
   
-  public Move
+  public boolean damage(int dmg) {
+    if (isFainted()) return false;
+    int prev = hp;
+    this.hp = Math.max(0,  hp - dmg);
+    int delta = hp - prev;
+    if (isFainted()) {
+      Communicator.passMessage(name + " desmaiou!");
+      return true;
+    }
+    return false;
+  }
   
+  // retorna o fator aleatório de um critical hit
+  public double critical() {
+    return (new Random().nextDouble() < speed/512) ? 1.5 : 1;
+  }
+  
+  // retorna o fator de efetividade de tipos (STAB)
+  public double stab(Move m) {
+    for (Type t : types) {
+      if (t.equals(m.getType())) return 1.5;
+    }
+    return 1;
+  }
+  
+  // assume que pode ser usado
   public void attack(Pokemon target, Move m) {
-    
+    // avisar o uso
+    Communicator.passMessage(name + " usou " + m.getName() + "!");
+    // primeiro, ver se tem algum status effect que causa chance de erro
+    for (StatusEffect se : effects) {
+      if (se.hindrance == Hindrance.MISS
+        || se.hindrance == Hindrance.MISS_AND_HURT_SELF && se.doChance()) {
+        Communicator.passMessage("Mas errou devido à " + se.getName());
+        if (se.hindrance == Hindrance.MISS_AND_HURT_SELF) {
+          int dmg = se.calculateDamage(this);
+          System.out.println("E ainda por cima tomou " + dmg + " de dano!");
+          this.damage(dmg);
+        }
+        return;
+      }
+    }
+    // executar o ataque
+    Effectiveness ef = Effectiveness.fromTypes(m.getType(), target.getTypes());
+    double typeFactor = ef.damageFactor();
+    if (typeFactor == 0) {
+      Communicator.passMessage("Mas " + m.getName() + " é imune!");
+      return;
+    }
+    // calcular o dano
+    double randomizer = 0.85 + new Random().nextDouble() * 0.15;
+    double modifier = critical() * stab(m) * typeFactor * randomizer;
+    double frac = m.special ? (special_attack/target.special_defense)
+      : (attack/target.defense);
+    int damage = (int) ((((2*level/5 + 2)*m.power*frac)/50 + 2) * modifier);
+    target.damage(damage);
+    if (ef != Effectiveness.NORMAL)
+      Communicator.passMessage(ef.toString());
+    // implicar status effects
+    StatusEffect se = m.effect;
+    if (!target.isFainted() && m.doEffectChance()
+      && !target.getEffects().contains(se)) {
+      target.getEffects().add(se);
+      Communicator.passMessage(target.getName() + " agora está "
+        + se.getAdjective() + "!");
+    }
   }
 }
