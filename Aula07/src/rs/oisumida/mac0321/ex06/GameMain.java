@@ -34,16 +34,16 @@ public class GameMain {
 			return;
 		}
 		if (act == Action.SWITCH) {
-			Pokemon pokemon = (Pokemon) Communicator.askWhich(
+			Pokemon pokemon = Communicator.askWhich(
 					player.toString()+", esolha um pokémon:", player.getRoster());
 		}
 		if (act == Action.ITEM) {
-			ItemStack item_stack = (ItemStack) Communicator.askWhich(
+			ItemStack item_stack = Communicator.askWhich(
 					player.toString()+", esolha um item:", player.getBag());
 		}
 		if (act == Action.FIGHT) {
-			var pokemon = player.getRoster().get(0);
-			var move = Communicator.askWhichArrayList(
+			Pokemon pokemon = player.getRoster().get(0);
+			Move move = Communicator.askWhich(
 					player.toString()+", esolha um ataque:", pokemon.getMoves());
 		}
 	}

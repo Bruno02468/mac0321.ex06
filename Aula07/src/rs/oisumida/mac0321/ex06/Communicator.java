@@ -93,12 +93,12 @@ public class Communicator {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> Object askWhich(String prompt, ArrayList<T> opts) {
+	public static <T> T askWhich(String prompt, ArrayList<T> opts) {
 		return (T) Communicator.askWhich(prompt, opts.toArray());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> Object askWhichArrayList(String prompt, ArrayList<T> opts) {
+	public static <T> T askWhichArrayList(String prompt, ArrayList<T> opts) {
 		return (T) Communicator.askWhich(prompt, opts.toArray());
 	}
 }
