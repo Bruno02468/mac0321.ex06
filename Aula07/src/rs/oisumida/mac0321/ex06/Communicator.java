@@ -73,7 +73,10 @@ public class Communicator {
 	public static Object askWhich(Object opts[]) {
 		return Communicator.askWhich("Escolha uma opção:", opts);
 	}
-	public static Object askWhich(String prompt, Object opts[]) {
+	public static int askWhichPos(String prompt, Object opts[]) {
+		if (opts.length == 0) {
+			return -1;
+		}
 		System.out.println(prompt);
 		for (int i=1; i <= opts.length; i++) {
 			System.out.print("[");
@@ -82,10 +85,20 @@ public class Communicator {
 		}
 		int pos = Communicator.getInt(1, opts.length);
 		pos -= 1;
+		return pos;
+	}
+	public static Object askWhich(String prompt, Object opts[]) {
+		if (opts.length == 0) {
+			return null;
+		}
+		int pos = Communicator.askWhichPos(prompt, opts);
 		return opts[pos];
 	}
 	public static void passMessage(String str) {
-		System.out.println(str);
+		System.out.println(Communicator.ANSI_RESET + str + Communicator.ANSI_RESET);
+	}
+	public static void passError(String str) {
+		System.out.println(Communicator.ANSI_RESET + Communicator.ANSI_RED + Communicator.ANSI_BOLD + str + Communicator.ANSI_RESET);
 	}
 
 	public static void divider() {
@@ -95,6 +108,10 @@ public class Communicator {
 	@SuppressWarnings("unchecked")
 	public static <T> T askWhich(String prompt, ArrayList<T> opts) {
 		return (T) Communicator.askWhich(prompt, opts.toArray());
+	}
+	
+	public static <T> int askWhichPos(String prompt, ArrayList<T> opts) {
+		return Communicator.askWhichPos(prompt, opts.toArray());
 	}
 	
 	@SuppressWarnings("unchecked")

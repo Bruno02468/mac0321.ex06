@@ -1,5 +1,7 @@
 package rs.oisumida.mac0321.ex06;
 
+import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
+
 public class GameMain {	
 	Trainer P1, P2;
 	public static void main(String[] args) {
@@ -14,37 +16,77 @@ public class GameMain {
 			Communicator.enableColors();
 		}
 		
-		P1 = getPlayerInfo(1);
-		Communicator.passMessage("Olá, "+P1.toString());
-		P2 = getPlayerInfo(2);
-		Communicator.passMessage("Olá, "+P2.toString());
+		System.out.println("Usar treinadores padrão? [S] Sim [N] Não");
+		if (Communicator.getBool()) {
+			P1 = new Trainer("Alice", Gender.FEMALE);
+			P2 = new Trainer("Bob", Gender.MALE);
+		} else {
+			P1 = getPlayerInfo(1);
+			Communicator.passMessage("Olá, "+P1.toString());
+			P2 = getPlayerInfo(2);
+			Communicator.passMessage("Olá, "+P2.toString());
+		}
+
+		P1.givePokemon(PokemonFactory.bulbasaur());
+		P2.givePokemon(PokemonFactory.bulbasaur());
 		
 		while (true) {
-			this.playerRun(P1);
-			this.playerRun(P2);
+			this.playerRun(P1, P2);
+			this.playerRun(P2, P1);
 		}
 	}
 	
-	private void playerRun(Trainer player) {
+	private void playerSwitch(Trainer player, Trainer adversary) throws Exception {
+		int new_pokemon = Communicator.askWhichPos(
+				player.toString()+", esolha um pokémon:", player.getRoster());
+		player.switchPokemon(new_pokemon);
+	}
+	
+	@SuppressWarnings("unused")
+	private void playerItem(Trainer player, Trainer adversary) throws Exception {
+		if (player.getBag().size() == 0) {
+			throw new MessageException("Você não tem itens!");
+		}
+		ItemStack item_stack = Communicator.askWhich(
+				player.toString()+", esolha um item:", player.getBag());
+	}
+	
+
+	private void playerFight(Trainer player, Trainer adversary) throws Exception {
+		Pokemon pokemon = player.getCurrentPokemon();
+		Move move = Communicator.askWhich(
+				player.toString()+", esolha um ataque:", pokemon.getMoves());
+		pokemon.attack(adversary.getCurrentPokemon(), move);
+	}
+	
+	private void playerRun(Trainer player, Trainer adversary) {
 		Communicator.divider();
-		Action act = (Action) Communicator.askWhich(
-				player.toString()+", esolha uma opção:", Action.List);
-		Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
-		if (act == Action.FLEE) {
-			return;
-		}
-		if (act == Action.SWITCH) {
-			Pokemon pokemon = Communicator.askWhich(
-					player.toString()+", esolha um pokémon:", player.getRoster());
-		}
-		if (act == Action.ITEM) {
-			ItemStack item_stack = Communicator.askWhich(
-					player.toString()+", esolha um item:", player.getBag());
-		}
-		if (act == Action.FIGHT) {
-			Pokemon pokemon = player.getRoster().get(0);
-			Move move = Communicator.askWhich(
-					player.toString()+", esolha um ataque:", pokemon.getMoves());
+		while (true) {
+			try {
+				Action act = (Action) Communicator.askWhich(
+						player.toString()+", esolha uma opção:", Action.List);
+				Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
+				if (act == Action.FLEE) {
+					throw new MessageException("Você não pode fugir!");
+					// break;
+				}
+				if (act == Action.SWITCH) {
+					this.playerSwitch(player, adversary);
+				}
+				if (act == Action.ITEM) {
+					this.playerItem(player, adversary);
+					break;
+				}
+				if (act == Action.FIGHT) {
+					this.playerFight(player, adversary);
+					break;
+				}
+			} catch (MessageException m) {
+				Communicator.passError(m.getMessage());
+			} catch (Exception e) {
+				System.out.println("Algo deu muito errado :(");
+				e.printStackTrace();
+			}
 		}
 	}
 

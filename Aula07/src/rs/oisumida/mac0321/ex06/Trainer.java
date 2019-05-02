@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Trainer {
 	private String name;
 	private Gender gender;
-	private int money;
+	private int money, current_pokemon;
 	private ArrayList<Pokemon> roster;
 	private ArrayList<ItemStack> bag;
 	
@@ -17,10 +17,24 @@ public class Trainer {
 		this.name = name;
 		this.gender = gender;
 		this.setMoney(money);
+		this.current_pokemon = 0;
+		this.roster = new ArrayList<Pokemon>();
+		this.bag = new ArrayList<ItemStack>();
 	}
 	
 	public String toString() {
 		return this.gender.getColor() + this.name + Communicator.ANSI_RESET;
+	}
+	
+	public Pokemon getCurrentPokemon() {
+		return this.roster.get(this.current_pokemon);
+	}
+	
+	public void switchPokemon(int new_pokemon) throws Exception {
+		if (new_pokemon < 0 || new_pokemon >= this.roster.size()) {
+			throw new Exception("número de pokemon inválido");
+		}
+		this.current_pokemon = new_pokemon;
 	}
 
   public int getMoney() {

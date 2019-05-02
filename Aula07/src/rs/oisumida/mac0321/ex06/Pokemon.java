@@ -31,6 +31,10 @@ public class Pokemon {
     this.types = types;
   }
   
+  public String toString() {
+	  return this.name + " L"+this.level+" HP "+this.hp+"/"+this.max_hp;
+  }
+  
   public String getName() {
     return name;
   }
