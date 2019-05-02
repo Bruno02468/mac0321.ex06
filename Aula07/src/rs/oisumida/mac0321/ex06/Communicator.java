@@ -96,4 +96,9 @@ public class Communicator {
 	public static <T> Object askWhich(String prompt, ArrayList<T> opts) {
 		return (T) Communicator.askWhich(prompt, opts.toArray());
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> Object askWhichArrayList(String prompt, ArrayList<T> opts) {
+		return (T) Communicator.askWhich(prompt, opts.toArray());
+	}
 }
