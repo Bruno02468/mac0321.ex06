@@ -42,6 +42,21 @@ public enum Effectiveness {
     return factor;
   }
   
+  public double damageFactor() {
+    switch (this) {
+      case IMMUNE:
+        return 0;
+      case NORMAL:
+        return 1;
+      case NOT_VERY:
+        return 0.5;
+      case SUPER:
+        return 2;
+      default:
+        return 1;
+    }
+  }
+  
   public static Effectiveness fromTypes(Type attack, Type defend[]) {
     switch ((int)Math.round(2*damageFactor(attack, defend))) {
       case 0:
