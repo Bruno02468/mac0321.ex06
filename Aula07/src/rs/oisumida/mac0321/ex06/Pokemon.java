@@ -97,9 +97,7 @@ public class Pokemon {
   
   public boolean damage(int dmg) {
     if (isFainted()) return false;
-    int prev = hp;
     this.hp = Math.max(0,  hp - dmg);
-    int delta = hp - prev;
     if (isFainted()) {
       Communicator.passMessage(name + " desmaiou!");
       return true;

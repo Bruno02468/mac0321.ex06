@@ -25,8 +25,8 @@ public class PPRestoringItem extends Item {
         result |= target.addMovePP(move_number, pp);
       }
     } else {
-      Move m = (Move) Communicator.askWhich("Quer recarregar o PP de qual "
-        + "ataque?", target.getMoves().toArray());
+      Move m = (Move) Communicator.askWhichArrayList("Quer recarregar o PP de"
+        + " qual ataque?", target.getMoves());
       int index = target.getMoves().indexOf(m);
       result |= target.addMovePP(index, pp);
     }
