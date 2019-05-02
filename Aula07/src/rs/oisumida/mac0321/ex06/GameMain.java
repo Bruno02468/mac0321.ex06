@@ -37,6 +37,15 @@ public class GameMain {
 			Pokemon pokemon = (Pokemon) Communicator.askWhich(
 					player.toString()+", esolha um pokémon:", player.getRoster());
 		}
+		if (act == Action.ITEM) {
+			ItemStack item_stack = (ItemStack) Communicator.askWhich(
+					player.toString()+", esolha um item:", player.getBag());
+		}
+		if (act == Action.FIGHT) {
+			var pokemon = player.getRoster().get(0);
+			var move = Communicator.askWhichArrayList(
+					player.toString()+", esolha um ataque:", pokemon.getMoves());
+		}
 	}
 
 	Trainer getPlayerInfo(int num) {
