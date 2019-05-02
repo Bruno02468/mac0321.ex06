@@ -27,6 +27,10 @@ public class Move {
     this.go_away_chance = go_away_chance;
   }
 
+  public String toString() {
+	    return name;
+	  }
+  
   public String getName() {
     return name;
   }

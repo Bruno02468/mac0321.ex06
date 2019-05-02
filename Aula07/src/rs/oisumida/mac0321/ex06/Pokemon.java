@@ -15,7 +15,7 @@ public class Pokemon {
   
   public Pokemon(String name, int max_hp, int exp, int level, int hp,
       Gender gender, ArrayList<StatusEffect> effects,
-      int a, int sa, int d, int sd, int spd, Type types[]) {
+      int a, int sa, int d, int sd, int spd, Type types[], ArrayList<Move> moves) {
     this.name = name;
     this.max_hp = max_hp;
     this.hp = hp;
@@ -29,6 +29,7 @@ public class Pokemon {
     this.special_defense = sd;
     this.speed = spd;
     this.types = types;
+    this.moves = moves;
   }
   
   public String toString() {
