@@ -68,4 +68,8 @@ public class Trainer {
 	  if (roster.size() == GameConstants.MAX_ROSTER) return;
 	  roster.add(p);
 	}
+
+	public Gender getGender() {
+		return this.gender;
+	}
 }

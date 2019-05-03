@@ -4,6 +4,7 @@ import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
+	private Map map;
 	public static void main(String[] args) {
 		GameMain game = new GameMain();
 		game.run();
@@ -26,16 +27,48 @@ public class GameMain {
 			P2 = getPlayerInfo(2);
 			Communicator.passMessage("Olá, "+P2.toString());
 		}
-
-		P1.givePokemon(PokemonFactory.bulbasaur());
-		P2.givePokemon(PokemonFactory.bulbasaur());
+		int ans = Communicator.askWhichPos("Qual modo de jogo?", new String[]{"Solo", "Versus"});
+		if (ans == 0) {
+			this.Solo();
+		}
+		if (ans == 1) {
+			this.Versus();
+		}
+	}
+	
+	private void Versus() {
+		P1.givePokemon(PokemonFactory.aleatorio());
+		P2.givePokemon(PokemonFactory.aleatorio());
 		
 		while (true) {
 			this.playerRun(P1, P2);
 			this.playerRun(P2, P1);
 		}
 	}
-	
+
+	private void Solo() {
+		P1.givePokemon(PokemonFactory.aleatorio());
+		this.map = new Map(this.P1);
+		
+		while (true) {
+			Trainer wild = null;
+			Communicator.passMessage(this.map.toString());
+			while (true) {
+				try {
+					Direction dir = Communicator.getDirection();
+					wild = this.map.movePlayer(dir);
+					break;
+				} catch (Exception e) {
+					Communicator.passError(e.getMessage());
+				}
+			}
+			if (wild != null) {
+				Communicator.passMessage("Um(a) " + wild.getRoster().get(0).getName() + " selvagem apareceu!");
+				playerRun(this.P1, wild);
+			}
+		}
+	}
+
 	private void playerSwitch(Trainer player, Trainer adversary) throws Exception {
 		int new_pokemon = Communicator.askWhichPos(
 				player.toString()+", esolha um pokémon:", player.getRoster());
