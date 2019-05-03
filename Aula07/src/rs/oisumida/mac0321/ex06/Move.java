@@ -10,21 +10,18 @@ public class Move {
   public final double effect_chance;
   private Type type;
   public final boolean special;
-  public final double go_away_chance;
   
-  public Move(String name, int pp, int base_pp, int power, int accuracy, 
-    StatusEffect effect, double effect_chance, Type type, boolean special,
-    double go_away_chance) {
+  public Move(String name, int base_pp, int power, int accuracy, 
+    StatusEffect effect, double effect_chance, Type type, boolean special) {
     this.name = name;
-    this.pp = pp;
-    this.base_pp = pp;
+    this.base_pp = base_pp;
+    this.pp = base_pp;
     this.power = power;
     this.accuracy = accuracy;
     this.effect = effect;
     this.effect_chance = effect_chance;
     this.type = type;
     this.special = special;
-    this.go_away_chance = go_away_chance;
   }
 
   public String toString() {
@@ -51,7 +48,8 @@ public class Move {
     return (new Random().nextDouble() < effect_chance);
   }
   
-  public boolean doCureChance() {
-    return (new Random().nextDouble() < go_away_chance);
+  public boolean doMissChance() {
+    return (new Random().nextDouble() < accuracy/100.0);
   }
+  
 }

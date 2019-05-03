@@ -6,20 +6,19 @@ import java.util.Random;
 public class Pokemon {
   private String name;
   public final int max_hp;
-  private int exp, level, hp;
+  private int level, hp;
   private Gender gender;
   private ArrayList<StatusEffect> effects;
   private ArrayList<Move> moves;
   public final int attack, special_attack, defense, special_defense, speed;
   private Type types[];
   
-  public Pokemon(String name, int max_hp, int exp, int level, int hp,
+  public Pokemon(String name, int max_hp, int level,
       Gender gender, ArrayList<StatusEffect> effects,
       int a, int sa, int d, int sd, int spd, Type types[], ArrayList<Move> moves) {
     this.name = name;
     this.max_hp = max_hp;
-    this.hp = hp;
-    this.exp = exp;
+    this.hp = max_hp;
     this.level = level;
     this.gender = gender;
     this.effects = effects;
@@ -38,10 +37,6 @@ public class Pokemon {
   
   public String getName() {
     return name;
-  }
-
-  public int getExp() {
-    return exp;
   }
 
   public int getLevel() {
