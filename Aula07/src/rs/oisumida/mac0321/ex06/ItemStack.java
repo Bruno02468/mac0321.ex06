@@ -31,4 +31,9 @@ public class ItemStack {
   public boolean isOf(Item i) {
     return this.item.equals(i);
   }
+  
+  @Override
+  public String toString() {
+    return item + " [" + amount + "]"; 
+  }
 }
