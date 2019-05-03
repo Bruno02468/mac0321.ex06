@@ -4,6 +4,7 @@ import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
+	private Map map;
 	public static void main(String[] args) {
 		GameMain game = new GameMain();
 		game.run();
@@ -26,7 +27,16 @@ public class GameMain {
 			P2 = getPlayerInfo(2);
 			Communicator.passMessage("Olá, "+P2.toString());
 		}
-
+		int ans = Communicator.askWhichPos("Qual modo de jogo?", new String[]{"Solo", "Versus"});
+		if (ans == 0) {
+			this.Solo();
+		}
+		if (ans == 1) {
+			this.Versus();
+		}
+	}
+	
+	private void Versus() {
 		P1.givePokemon(PokemonFactory.bulbasaur());
 		P2.givePokemon(PokemonFactory.bulbasaur());
 		
@@ -35,7 +45,24 @@ public class GameMain {
 			this.playerRun(P2, P1);
 		}
 	}
-	
+
+	private void Solo() {
+		this.map = new Map(this.P1);
+		
+		while (true) {
+			Communicator.passMessage(this.map.toString());
+			while (true) {
+				try {
+					Direction dir = Communicator.getDirection();
+					this.map.movePlayer(dir);
+					break;
+				} catch (Exception e) {
+					Communicator.passError(e.getMessage());
+				}
+			}
+		}
+	}
+
 	private void playerSwitch(Trainer player, Trainer adversary) throws Exception {
 		int new_pokemon = Communicator.askWhichPos(
 				player.toString()+", esolha um pokémon:", player.getRoster());

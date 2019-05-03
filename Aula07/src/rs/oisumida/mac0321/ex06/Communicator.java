@@ -33,6 +33,21 @@ public class Communicator {
 		ANSI_BOLD    = "\u001B[1m";
 	}
 	
+	public static Direction getDirection() {
+		while (true) {
+			try {
+				System.out.print(ANSI_RESET+"> [W/A/S/D] ");
+				String val = scanner.next().replaceAll("\\s", "");
+				if (val.length() != 0) {
+					return Direction.fromString(val);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println(ANSI_BOLD+ANSI_RED+"Opção Inválida"+ANSI_RESET);
+		}
+	}
+	
 	public static int getInt(int min, int max) {
 		while (true) {
 			System.out.print(ANSI_RESET+"> ");

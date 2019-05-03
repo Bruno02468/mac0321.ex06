@@ -33,5 +33,15 @@ public enum Gender {
 			return getColor()+"Não-Binárix ⚧"+Communicator.ANSI_RESET;
 		}
 	}
+	public String getEmoji() {
+		switch (this) {
+		case MALE:
+			return "👦🏻";
+		case FEMALE:
+			return "👧🏻";
+		default:
+			return "😺";
+		}
+	}
 }
 
