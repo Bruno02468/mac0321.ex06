@@ -2,6 +2,8 @@ package rs.oisumida.mac0321.ex06;
 
 import java.util.Random;
 
+import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
+
 public class Map {
 	private int w, h;
 	private TileType tiles[][];
@@ -83,8 +85,7 @@ public class Map {
 		return ans.toString();
 	}
 	
-	// Returns true if there is a wild battle
-	public boolean movePlayer(Direction dir) throws Exception {
+	public Trainer movePlayer(Direction dir) throws Exception {
 		int x2 = this.player_x + dir.getDeltaX();
 		int y2 = this.player_y + dir.getDeltaY();
 		if (x2 < 0 || x2 >= this.w || y2 < 0 || y2 >= this.h) {
@@ -92,6 +93,17 @@ public class Map {
 		}
 		this.player_x = x2;
 		this.player_y = y2;
-		return false;
+		
+		if (this.getPlayerTile() == TileType.Grass && this.rand.nextFloat() < 0.25) {
+			Trainer wild = new Trainer("Wild", Gender.NONBINARY);
+			wild.givePokemon(PokemonFactory.bulbasaur());
+			return wild;
+		}
+		
+		return null;
+	}
+
+	private TileType getPlayerTile() {
+		return this.tiles[this.player_y][this.player_x]; 
 	}
 }

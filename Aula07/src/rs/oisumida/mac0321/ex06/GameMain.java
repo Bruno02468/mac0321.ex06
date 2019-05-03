@@ -47,18 +47,24 @@ public class GameMain {
 	}
 
 	private void Solo() {
+		P1.givePokemon(PokemonFactory.bulbasaur());
 		this.map = new Map(this.P1);
 		
 		while (true) {
+			Trainer wild = null;
 			Communicator.passMessage(this.map.toString());
 			while (true) {
 				try {
 					Direction dir = Communicator.getDirection();
-					this.map.movePlayer(dir);
+					wild = this.map.movePlayer(dir);
 					break;
 				} catch (Exception e) {
 					Communicator.passError(e.getMessage());
 				}
+			}
+			if (wild != null) {
+				Communicator.passMessage("Um(a) " + wild.getRoster().get(0).getName() + " selvagem apareceu!");
+				playerRun(this.P1, wild);
 			}
 		}
 	}
