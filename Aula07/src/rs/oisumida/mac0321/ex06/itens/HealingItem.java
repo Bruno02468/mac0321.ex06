@@ -8,8 +8,8 @@ public class HealingItem extends Item {
   
   private int healing;
   
-  public HealingItem(String name, int max_stack, int healing) {
-    super(name, max_stack, true);
+  public HealingItem(String name, int healing) {
+    super(name, 10, true);
   }
   
   public boolean applyAs(Trainer player, Pokemon target) {

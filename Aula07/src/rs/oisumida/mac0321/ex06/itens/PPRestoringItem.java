@@ -11,8 +11,8 @@ public class PPRestoringItem extends Item {
   private final int pp;
   private final boolean every;
 
-  public PPRestoringItem(String name, int max_stack, int pp, boolean every) {
-    super(name, max_stack, true);
+  public PPRestoringItem(String name, int pp, boolean every) {
+    super(name, 10, true);
     this.pp = pp;
     this.every = every;
   }

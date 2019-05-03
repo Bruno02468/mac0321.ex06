@@ -21,6 +21,6 @@ public class FactoryUtils {
   }
   
   public static int randomInt(int min, int max, Random r) {
-    return (int) (min + r.nextDouble() * (max-min));
+    return r.nextInt((max - min) + 1) + min;
   }
 }
