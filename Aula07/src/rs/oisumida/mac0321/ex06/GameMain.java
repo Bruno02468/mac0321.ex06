@@ -108,6 +108,10 @@ public class GameMain {
 		}
 		ItemStack item_stack = Communicator.askWhich(
 				player.toString()+", esolha um item:", player.getBag());
+		if (item_stack.getAmount() <= 0) {
+			throw new Exception("itens insuficientes");
+		}
+		item_stack.apply(player, adversary.getCurrentPokemon());
 	}
 	
 

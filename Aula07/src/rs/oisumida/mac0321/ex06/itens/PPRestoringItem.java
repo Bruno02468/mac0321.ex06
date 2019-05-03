@@ -4,6 +4,7 @@ import rs.oisumida.mac0321.ex06.Communicator;
 import rs.oisumida.mac0321.ex06.Item;
 import rs.oisumida.mac0321.ex06.Move;
 import rs.oisumida.mac0321.ex06.Pokemon;
+import rs.oisumida.mac0321.ex06.Trainer;
 
 public class PPRestoringItem extends Item {
   
@@ -17,7 +18,7 @@ public class PPRestoringItem extends Item {
   }
 
   @Override
-  public boolean applyTo(Pokemon target) {
+  public boolean apply(Trainer player, Pokemon target) {
     boolean result = false;
     if (every) {
       for (int move_number = 0; move_number < target.getMoves().size();

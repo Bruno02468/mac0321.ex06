@@ -2,6 +2,7 @@ package rs.oisumida.mac0321.ex06.itens;
 
 import rs.oisumida.mac0321.ex06.Item;
 import rs.oisumida.mac0321.ex06.Pokemon;
+import rs.oisumida.mac0321.ex06.Trainer;
 
 public class HealingItem extends Item {
   
@@ -12,7 +13,7 @@ public class HealingItem extends Item {
   }
 
   @Override
-  public boolean applyTo(Pokemon target) {
+  public boolean apply(Trainer player, Pokemon target) {
     return target.heal(healing);
   }
 

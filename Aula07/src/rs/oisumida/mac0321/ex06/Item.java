@@ -22,5 +22,7 @@ public abstract class Item {
     return name.equals(other.getName());
   }
   
-  public abstract boolean applyTo(Pokemon target);
+  public boolean apply(Trainer player, Pokemon target) {
+	  return false;
+  }
 }

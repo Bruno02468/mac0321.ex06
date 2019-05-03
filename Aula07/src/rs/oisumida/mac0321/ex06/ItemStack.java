@@ -13,9 +13,9 @@ public class ItemStack {
     this.amount = amount;
   }
   
-  public void applyTo(Pokemon target) {
+  public void apply(Trainer player, Pokemon target) {
     if (amount <= 0) return;
-    boolean shouldConsume = item.applyTo(target);
+    boolean shouldConsume = item.apply(player, target);
     if (shouldConsume) {
       amount--;
     } else {
