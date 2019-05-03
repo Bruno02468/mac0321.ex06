@@ -37,8 +37,8 @@ public class GameMain {
 	}
 	
 	private void Versus() {
-		P1.givePokemon(PokemonFactory.bulbasaur());
-		P2.givePokemon(PokemonFactory.bulbasaur());
+		P1.givePokemon(PokemonFactory.aleatorio());
+		P2.givePokemon(PokemonFactory.aleatorio());
 		
 		while (true) {
 			this.playerRun(P1, P2);
@@ -47,7 +47,7 @@ public class GameMain {
 	}
 
 	private void Solo() {
-		P1.givePokemon(PokemonFactory.bulbasaur());
+		P1.givePokemon(PokemonFactory.aleatorio());
 		this.map = new Map(this.P1);
 		
 		while (true) {

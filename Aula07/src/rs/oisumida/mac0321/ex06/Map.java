@@ -96,7 +96,7 @@ public class Map {
 		
 		if (this.getPlayerTile() == TileType.Grass && this.rand.nextFloat() < 0.25) {
 			Trainer wild = new Trainer("Wild", Gender.NONBINARY);
-			wild.givePokemon(PokemonFactory.bulbasaur());
+			wild.givePokemon(PokemonFactory.aleatorio());
 			return wild;
 		}
 		
