@@ -6,7 +6,7 @@ import rs.oisumida.mac0321.ex06.Gender;
 import rs.oisumida.mac0321.ex06.Trainer;
 
 public class TrainerFactory {
-  public static Trainer randomTrainer(boolean vs) {
+  public static Trainer aleatorio(boolean vs) {
     Random r = new Random();
     String primeiros[] = {
       "Fulanx",
@@ -69,5 +69,9 @@ public class TrainerFactory {
     
     return t;
     
+  }
+  
+  public static Trainer aleatorio() {
+    return aleatorio(true);
   }
 }

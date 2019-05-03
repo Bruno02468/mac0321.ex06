@@ -111,7 +111,7 @@ public class GameMain {
 		if (item_stack.getAmount() <= 0) {
 			throw new Exception("itens insuficientes");
 		}
-		item_stack.apply(player, adversary.getCurrentPokemon());
+		item_stack.applyAs(player, adversary.getCurrentPokemon());
 	}
 	
 
