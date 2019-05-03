@@ -18,6 +18,16 @@ public class Communicator {
 	
 	public static void start() {
 		scanner = new Scanner(System.in);
+		if (Communicator.isFancy()) {
+			Communicator.enableColors();
+		}
+	}
+	
+	public static boolean isFancy() {
+		if (System.console() != null && System.getenv().get("TERM") != null) {
+			return true;
+		}
+		return false;
 	}
 	
 	static void enableColors() {

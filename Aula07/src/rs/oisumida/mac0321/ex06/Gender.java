@@ -34,6 +34,9 @@ public enum Gender {
 		}
 	}
 	public String getEmoji() {
+		if (!Communicator.isFancy()) {
+			return this.toSymbol();
+		}
 		switch (this) {
 		case MALE:
 			return "👦🏻";

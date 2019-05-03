@@ -12,10 +12,6 @@ public class GameMain {
 	
 	private void run() {
 		Communicator.start();
-		System.out.println("Ativar cores? [S] Sim [N] Não");
-		if (Communicator.getBool()) {
-			Communicator.enableColors();
-		}
 		
 		System.out.println("Usar treinadores padrão? [S] Sim [N] Não");
 		if (Communicator.getBool()) {
