@@ -1,10 +1,13 @@
 package rs.oisumida.mac0321.ex06;
 
+import java.util.ArrayList;
+
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
 	private Map map;
+	private boolean canFlee = false;
 	public static void main(String[] args) {
 		GameMain game = new GameMain();
 		game.run();
@@ -35,10 +38,20 @@ public class GameMain {
 	private void Versus() {
 		P1.givePokemon(PokemonFactory.aleatorio());
 		P2.givePokemon(PokemonFactory.aleatorio());
+		this.canFlee  = true;
 		
+		boolean keep_fighting;
 		while (true) {
-			this.playerRun(P1, P2);
-			this.playerRun(P2, P1);
+			P1.printStats();
+			P2.printStats();
+			keep_fighting = this.playerRun(P1, P2);
+			if (!keep_fighting) {
+				break;
+			}
+			keep_fighting = this.playerRun(P2, P1);
+			if (!keep_fighting) {
+				break;
+			}
 		}
 	}
 
@@ -59,8 +72,25 @@ public class GameMain {
 				}
 			}
 			if (wild != null) {
-				Communicator.passMessage("Um(a) " + wild.getRoster().get(0).getName() + " selvagem apareceu!");
-				playerRun(this.P1, wild);
+				Pokemon wild_pokemon = wild.getCurrentPokemon();
+				Communicator.passMessage("Um(a) " + wild_pokemon.getName() + " selvagem apareceu!");
+				boolean keep_fighting;
+				while (true) {
+					P1.printStats();
+					Communicator.passMessage("Pokemon selvagem:");
+					System.out.print("\t");
+					wild_pokemon.printStats();
+					keep_fighting = this.playerRun(P1, wild);
+					if (!keep_fighting) {
+						break;
+					}
+					
+					wild_pokemon.attack(P1.getCurrentPokemon(), wild_pokemon.getRandomMove());
+					if (wild.areAllFainted()) {
+						Communicator.passMessage(wild.getRoster().get(0).getName()+ " selvagem desmaiou!");
+						return;
+					}
+				}
 			}
 		}
 	}
@@ -88,16 +118,23 @@ public class GameMain {
 		pokemon.attack(adversary.getCurrentPokemon(), move);
 	}
 	
-	private void playerRun(Trainer player, Trainer adversary) {
+	// has next round
+	private boolean playerRun(Trainer player, Trainer adversary) {
 		Communicator.divider();
+		if (player.areAllFainted()) {
+			Communicator.passMessage(player.toString()+ " todos os seus pokemons desmaiaram!");
+			return false;
+		}
 		while (true) {
 			try {
 				Action act = (Action) Communicator.askWhich(
 						player.toString()+", esolha uma opção:", Action.List);
 				Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
 				if (act == Action.FLEE) {
+					if (this.canFlee) {
+						return false;
+					}
 					throw new MessageException("Você não pode fugir!");
-					// break;
 				}
 				if (act == Action.SWITCH) {
 					this.playerSwitch(player, adversary);
@@ -117,6 +154,7 @@ public class GameMain {
 				e.printStackTrace();
 			}
 		}
+		return true;
 	}
 
 	Trainer getPlayerInfo(int num) {

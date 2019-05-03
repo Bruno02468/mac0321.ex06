@@ -160,4 +160,14 @@ public class Pokemon {
         + se.getAdjective() + "!");
     }
   }
+
+	public Move getRandomMove() {
+		Random rand = new Random();
+		int index = rand.nextInt(this.moves.size());
+		return this.moves.get(index);
+	}
+
+	public void printStats() {
+		System.out.println(this.toString());
+	}
 }

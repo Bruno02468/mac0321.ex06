@@ -1,6 +1,7 @@
 package rs.oisumida.mac0321.ex06;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Trainer {
 	private String name;
@@ -71,5 +72,24 @@ public class Trainer {
 
 	public Gender getGender() {
 		return this.gender;
+	}
+	
+	public boolean areAllFainted() {
+		Iterator<Pokemon> it = this.roster.iterator();
+		while (it.hasNext()) {
+			if (!it.next().isFainted()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void printStats() {
+		System.out.println(this.toString() + ", seus pokemons:");
+		Iterator<Pokemon> it = this.roster.iterator();
+		while (it.hasNext()) {
+			System.out.print("\t");
+			it.next().printStats();
+		}
 	}
 }
