@@ -3,10 +3,12 @@ package rs.oisumida.mac0321.ex06;
 public abstract class Item {
   private String name;
   public final int max_stack;
+  public boolean mine;
   
-  public Item(String name, int max_stack) {
+  public Item(String name, int max_stack, boolean mine) {
     this.name = name;
     this.max_stack = max_stack;
+    this.mine = mine;
   }
   
   public String getName() {
@@ -22,7 +24,5 @@ public abstract class Item {
     return name.equals(other.getName());
   }
   
-  public boolean apply(Trainer player, Pokemon target) {
-	  return false;
-  }
+  public abstract boolean applyAs(Trainer player, Pokemon target);
 }

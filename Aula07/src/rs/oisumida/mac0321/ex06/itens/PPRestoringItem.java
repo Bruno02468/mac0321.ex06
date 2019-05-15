@@ -12,13 +12,12 @@ public class PPRestoringItem extends Item {
   private final boolean every;
 
   public PPRestoringItem(String name, int max_stack, int pp, boolean every) {
-    super(name, max_stack);
+    super(name, max_stack, true);
     this.pp = pp;
     this.every = every;
   }
 
-  @Override
-  public boolean apply(Trainer player, Pokemon target) {
+  public boolean applyAs(Trainer player, Pokemon target) {
     boolean result = false;
     if (every) {
       for (int move_number = 0; move_number < target.getMoves().size();

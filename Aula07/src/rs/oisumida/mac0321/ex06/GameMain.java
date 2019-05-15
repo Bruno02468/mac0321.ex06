@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import rs.oisumida.mac0321.ex06.events.PlayerRoundEvent;
 import rs.oisumida.mac0321.ex06.events.PlayerTurnEvent;
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
+import rs.oisumida.mac0321.ex06.factories.TrainerFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
@@ -25,13 +26,12 @@ public class GameMain {
 		Communicator.start();
 		
 		System.out.println("Usar treinadores padrão? [S] Sim [N] Não");
-		if (Communicator.getBool()) {
-			P1 = new Trainer("Alice", Gender.FEMALE);
-			P2 = new Trainer("Bob", Gender.MALE);
-		} else {
-			P1 = getPlayerInfo(1);
+		P1 = TrainerFactory.aleatorio();
+		P2 = TrainerFactory.aleatorio();
+		if (!Communicator.getBool()) {
+			P1 = getPlayerInfo(1, P1);
 			Communicator.passMessage("Olá, "+P1.toString());
-			P2 = getPlayerInfo(2);
+			P2 = getPlayerInfo(2, P2);
 			Communicator.passMessage("Olá, "+P2.toString());
 		}
 		int ans = Communicator.askWhichPos("Qual modo de jogo?", new String[]{"Solo", "Versus"});
@@ -164,13 +164,15 @@ public class GameMain {
 		return true;
 	}
 
-	Trainer getPlayerInfo(int num) {
+	Trainer getPlayerInfo(int num, Trainer player) {
 		Communicator.divider();
 		Gender gender = (Gender) Communicator.askWhich(
 				"Jogador(a) "+Integer.toString(num)+", você é:", Gender.List);
 		Communicator.passMessage("Seu nome? ");
 		String name = Communicator.getString();
-		return new Trainer(name, gender);
+		player.setName(name);
+		player.setGender(gender);
+		return player;
 	}
 
 }

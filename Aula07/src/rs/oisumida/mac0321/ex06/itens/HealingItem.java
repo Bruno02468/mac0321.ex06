@@ -9,11 +9,10 @@ public class HealingItem extends Item {
   private int healing;
   
   public HealingItem(String name, int max_stack, int healing) {
-    super(name, max_stack);
+    super(name, max_stack, true);
   }
-
-  @Override
-  public boolean apply(Trainer player, Pokemon target) {
+  
+  public boolean applyAs(Trainer player, Pokemon target) {
     return target.heal(healing);
   }
 
