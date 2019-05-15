@@ -9,7 +9,7 @@ public class FleeEvent implements Event {
 	}
 
 	@Override
-	public void run() {
+	public void run(EventController controller) {
 		// TODO Auto-generated method stub
 
 	}

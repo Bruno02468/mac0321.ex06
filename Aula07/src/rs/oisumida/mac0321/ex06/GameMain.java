@@ -2,18 +2,26 @@ package rs.oisumida.mac0321.ex06;
 
 import java.util.ArrayList;
 
+import rs.oisumida.mac0321.ex06.events.PlayerRoundEvent;
+import rs.oisumida.mac0321.ex06.events.PlayerTurnEvent;
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
 	private Map map;
 	private boolean canFlee = false;
+	private GameController controller;
 	public static void main(String[] args) {
 		GameMain game = new GameMain();
-		game.run();
+		game.controller = new GameController();
+		try {
+			game.run();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void run() {
+	private void run() throws Throwable {
 		Communicator.start();
 		
 		System.out.println("Usar treinadores padrão? [S] Sim [N] Não");
@@ -35,24 +43,19 @@ public class GameMain {
 		}
 	}
 	
-	private void Versus() {
-		P1.givePokemon(PokemonFactory.aleatorio());
-		P2.givePokemon(PokemonFactory.aleatorio());
-		this.canFlee  = true;
-		
-		boolean keep_fighting;
-		while (true) {
-			P1.printStats();
-			P2.printStats();
-			keep_fighting = this.playerRun(P1, P2);
-			if (!keep_fighting) {
-				break;
-			}
-			keep_fighting = this.playerRun(P2, P1);
-			if (!keep_fighting) {
-				break;
-			}
+	private void Versus() throws Throwable {
+		if (P1.getRoster().isEmpty()) {
+			P1.givePokemon(PokemonFactory.aleatorio());
 		}
+		if (P2.getRoster().isEmpty()) {
+			P2.givePokemon(PokemonFactory.aleatorio());
+		}
+		this.canFlee = true;
+		P1.setCanFlee(false);
+		P2.setCanFlee(false);
+		
+		controller.addEvent(new PlayerRoundEvent(P1, P2));
+		controller.run();
 	}
 
 	private void Solo() {

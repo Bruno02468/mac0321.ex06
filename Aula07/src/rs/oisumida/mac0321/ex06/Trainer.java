@@ -9,6 +9,7 @@ public class Trainer {
 	private int money, current_pokemon;
 	private ArrayList<Pokemon> roster;
 	private ArrayList<ItemStack> bag;
+	private boolean setCanFlee;
 	
 	public Trainer(String name, Gender gender) {
 	  this(name, gender, 1000);
@@ -91,5 +92,12 @@ public class Trainer {
 			System.out.print("\t");
 			it.next().printStats();
 		}
+	}
+
+	public void setCanFlee(boolean can_flee) {
+		this.setCanFlee = can_flee;
+	}
+	public boolean canFlee() {
+		return this.setCanFlee;
 	}
 }

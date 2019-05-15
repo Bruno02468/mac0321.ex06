@@ -30,7 +30,7 @@ public class SelectEvent<T> implements Event {
 		return 999;
 	}
 
-	public void run() {
+	public void run(EventController controller) {
 		System.out.println(prompt);
 		Iterator<T> it = opts.iterator();
 		for (int i = 1; it.hasNext(); i++) {
