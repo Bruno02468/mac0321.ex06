@@ -10,6 +10,7 @@ public class Trainer {
 	private ArrayList<Pokemon> roster;
 	private ArrayList<ItemStack> bag;
 	private boolean setCanFlee;
+	private boolean auto_play=false;
 	
 	public Trainer(String name, Gender gender) {
 	  this(name, gender, 1000);
@@ -68,6 +69,7 @@ public class Trainer {
 	
 	public void givePokemon(Pokemon p) {
 	  if (roster.size() == GameConstants.MAX_ROSTER) return;
+	  p.setTrainer(this);
 	  roster.add(p);
 	}
 
@@ -107,5 +109,13 @@ public class Trainer {
 	
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public void setAutoPlay(boolean auto_play) {
+		 this.auto_play = auto_play;
+	}
+	
+	public boolean getAutoPlay() {
+		 return this.auto_play;
 	}
 }

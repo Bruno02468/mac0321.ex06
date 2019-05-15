@@ -1,15 +1,12 @@
 package rs.oisumida.mac0321.ex06;
 
-import java.util.ArrayList;
-
-import rs.oisumida.mac0321.ex06.events.PlayerRoundEvent;
-import rs.oisumida.mac0321.ex06.events.PlayerTurnEvent;
+import rs.oisumida.mac0321.ex06.events.NextRoundEvent;
+import rs.oisumida.mac0321.ex06.events.WildPokemonEvent;
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
 	private Map map;
-	private boolean canFlee = false;
 	private GameController controller;
 	public static void main(String[] args) {
 		GameMain game = new GameMain();
@@ -51,15 +48,14 @@ public class GameMain {
 		if (P2.getRoster().isEmpty()) {
 			P2.givePokemon(PokemonFactory.aleatorio());
 		}
-		this.canFlee = true;
 		P1.setCanFlee(false);
 		P2.setCanFlee(false);
 		
-		controller.addEvent(new PlayerRoundEvent(P1, P2));
+		controller.addEvent(new NextRoundEvent(P1, P2));
 		controller.run();
 	}
 
-	private void Solo() {
+	private void Solo() throws Throwable {
 		P1.givePokemon(PokemonFactory.aleatorio());
 		this.map = new Map(this.P1);
 		
@@ -76,94 +72,10 @@ public class GameMain {
 				}
 			}
 			if (wild != null) {
-				Pokemon wild_pokemon = wild.getCurrentPokemon();
-				Communicator.passMessage("Um(a) " + wild_pokemon.getName() + " selvagem apareceu!");
-				boolean keep_fighting;
-				while (true) {
-					P1.printStats();
-					Communicator.passMessage("Pokemon selvagem:");
-					System.out.print("\t");
-					wild_pokemon.printStats();
-					
-					keep_fighting = this.playerRun(P1, wild);
-					if (!keep_fighting) {
-						break;
-					}
-					
-					wild_pokemon.attack(P1.getCurrentPokemon(), wild_pokemon.getRandomMove());
-					if (wild.areAllFainted()) {
-						Communicator.passMessage(wild.getRoster().get(0).getName()+ " selvagem desmaiou!");
-						return;
-					}
-				}
+				controller.addEvent(new WildPokemonEvent(this.P1, wild));
+				controller.run();
 			}
 		}
-	}
-
-	private void playerSwitch(Trainer player, Trainer adversary) throws Exception {
-		int new_pokemon = Communicator.askWhichPos(
-				player.toString()+", esolha um pokémon:", player.getRoster());
-		player.switchPokemon(new_pokemon);
-	}
-	
-	@SuppressWarnings("unused")
-	private void playerItem(Trainer player, Trainer adversary) throws Exception {
-		if (player.getBag().size() == 0) {
-			throw new MessageException("Você não tem itens!");
-		}
-		ItemStack item_stack = Communicator.askWhich(
-				player.toString()+", esolha um item:", player.getBag());
-		if (item_stack.getAmount() <= 0) {
-			throw new Exception("itens insuficientes");
-		}
-		item_stack.applyAs(player, adversary.getCurrentPokemon());
-	}
-	
-
-	private void playerFight(Trainer player, Trainer adversary) throws Exception {
-		Pokemon pokemon = player.getCurrentPokemon();
-		Move move = Communicator.askWhich(
-				player.toString()+", esolha um ataque:", pokemon.getMoves());
-		pokemon.attack(adversary.getCurrentPokemon(), move);
-	}
-	
-	// has next round
-	private boolean playerRun(Trainer player, Trainer adversary) {
-		Communicator.divider();
-		if (player.areAllFainted()) {
-			Communicator.passMessage(player.toString()+ " todos os seus pokemons desmaiaram!");
-			return false;
-		}
-		while (true) {
-			try {
-				Action act = (Action) Communicator.askWhich(
-						player.toString()+", esolha uma opção:", Action.List);
-				Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
-				if (act == Action.FLEE) {
-					if (this.canFlee) {
-						return false;
-					}
-					throw new MessageException("Você não pode fugir!");
-				}
-				if (act == Action.SWITCH) {
-					this.playerSwitch(player, adversary);
-				}
-				if (act == Action.ITEM) {
-					this.playerItem(player, adversary);
-					break;
-				}
-				if (act == Action.FIGHT) {
-					this.playerFight(player, adversary);
-					break;
-				}
-			} catch (MessageException m) {
-				Communicator.passError(m.getMessage());
-			} catch (Exception e) {
-				System.out.println("Algo deu muito errado :(");
-				e.printStackTrace();
-			}
-		}
-		return true;
 	}
 
 	Trainer getPlayerInfo(int num, Trainer player) {

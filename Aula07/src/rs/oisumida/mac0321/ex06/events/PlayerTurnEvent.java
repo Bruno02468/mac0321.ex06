@@ -3,6 +3,7 @@ package rs.oisumida.mac0321.ex06.events;
 import rs.oisumida.mac0321.ex06.Action;
 import rs.oisumida.mac0321.ex06.Communicator;
 import rs.oisumida.mac0321.ex06.MessageException;
+import rs.oisumida.mac0321.ex06.Pokemon;
 import rs.oisumida.mac0321.ex06.Trainer;
 
 public class PlayerTurnEvent implements Event {
@@ -25,6 +26,24 @@ public class PlayerTurnEvent implements Event {
 	}
 	@Override
 	public void run(EventController controller) {
+		if (this.player.getAutoPlay()) {
+			this.auto_run(controller);
+		} else {
+			this.user_run(controller);
+		}
+	}
+		
+	private void auto_run(EventController controller) {
+       Pokemon wild_pokemon = this.player.getCurrentPokemon();       
+       wild_pokemon.attack(this.player.getCurrentPokemon(), wild_pokemon.getRandomMove());
+       if (this.player.areAllFainted()) {
+           Communicator.passMessage(this.player.getRoster().get(0).getName()+ " selvagem desmaiou!");
+           controller.addEvent(new EndBattleEvent(this.player, this.adversary));
+           return;
+       }
+   }
+
+	private void user_run(EventController controller) {
 		Communicator.divider();
 		this.player.printStats();
 		if (player.areAllFainted()) {
