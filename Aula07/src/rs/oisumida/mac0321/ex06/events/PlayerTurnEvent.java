@@ -48,6 +48,7 @@ public class PlayerTurnEvent implements Event {
 		}
 		if (act == Action.ITEM) {
 			controller.addEvent(new ItemEvent(this.player, this.adversary));
+			controller.addEvent(new PlayerTurnEvent(this.player, this.adversary, 1));
 		}
 		if (act == Action.FIGHT) {
 			controller.addEvent(new FightEvent(this.player, this.adversary));

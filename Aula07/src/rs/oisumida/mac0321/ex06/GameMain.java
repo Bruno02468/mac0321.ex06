@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import rs.oisumida.mac0321.ex06.events.PlayerRoundEvent;
 import rs.oisumida.mac0321.ex06.events.PlayerTurnEvent;
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
-import rs.oisumida.mac0321.ex06.factories.TrainerFactory;
 
 public class GameMain {	
 	Trainer P1, P2;
@@ -26,8 +25,10 @@ public class GameMain {
 		Communicator.start();
 		
 		System.out.println("Usar treinadores padrão? [S] Sim [N] Não");
-		P1 = TrainerFactory.aleatorio();
-		P2 = TrainerFactory.aleatorio();
+		P1 = new Trainer("Alice", Gender.FEMALE);
+		P2 = new Trainer("Bob", Gender.MALE);
+		//P1 = TrainerFactory.aleatorio();
+		//P2 = TrainerFactory.aleatorio();
 		if (!Communicator.getBool()) {
 			P1 = getPlayerInfo(1, P1);
 			Communicator.passMessage("Olá, "+P1.toString());
@@ -83,6 +84,7 @@ public class GameMain {
 					Communicator.passMessage("Pokemon selvagem:");
 					System.out.print("\t");
 					wild_pokemon.printStats();
+					
 					keep_fighting = this.playerRun(P1, wild);
 					if (!keep_fighting) {
 						break;
@@ -114,7 +116,7 @@ public class GameMain {
 		if (item_stack.getAmount() <= 0) {
 			throw new Exception("itens insuficientes");
 		}
-		item_stack.apply(player, adversary.getCurrentPokemon());
+		item_stack.applyAs(player, adversary.getCurrentPokemon());
 	}
 	
 

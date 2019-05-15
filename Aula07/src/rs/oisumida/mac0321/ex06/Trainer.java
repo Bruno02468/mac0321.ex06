@@ -100,4 +100,12 @@ public class Trainer {
 	public boolean canFlee() {
 		return this.setCanFlee;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
 }

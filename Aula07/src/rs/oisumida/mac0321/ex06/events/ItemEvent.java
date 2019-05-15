@@ -29,6 +29,6 @@ public class ItemEvent implements Event {
 			Communicator.passError("itens insuficientes");
 			return;
 		}
-		item_stack.apply(player, adversary.getCurrentPokemon());
+		item_stack.applyAs(player, adversary.getCurrentPokemon());
 	}
 }
