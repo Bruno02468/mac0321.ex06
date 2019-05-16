@@ -22,15 +22,6 @@ public class GameMain {
 	private void run() throws Throwable {
 		Communicator.start();
 		
-		System.out.println("Usar treinadores aleattórios? [S] Sim [N] Não");
-		P1 = TrainerFactory.aleatorio();
-		P2 = TrainerFactory.aleatorio();
-		if (!Communicator.getBool()) {
-			P1 = getPlayerInfo(1, P1);
-			Communicator.passMessage("Olá, "+P1.toString());
-			P2 = getPlayerInfo(2, P2);
-			Communicator.passMessage("Olá, "+P2.toString());
-		}
 		int ans = Communicator.askWhichPos("Qual modo de jogo?", new String[]{"Solo", "Versus"});
 		if (ans == 0) {
 			this.Solo();
@@ -41,6 +32,16 @@ public class GameMain {
 	}
 	
 	private void Versus() throws Throwable {
+		System.out.println("Usar treinadores aleatórios? [S] Sim [N] Não");
+		P1 = TrainerFactory.aleatorio();
+		P2 = TrainerFactory.aleatorio();
+		if (!Communicator.getBool()) {
+			P1 = getPlayerInfo(1, P1);
+			Communicator.passMessage("Olá, "+P1.toString());
+			P2 = getPlayerInfo(2, P2);
+			Communicator.passMessage("Olá, "+P2.toString());
+		}
+		
 		if (P1.getRoster().isEmpty()) {
 			P1.givePokemon(PokemonFactory.aleatorio());
 		}
@@ -55,6 +56,13 @@ public class GameMain {
 	}
 
 	private void Solo() throws Throwable {
+		System.out.println("Usar treinador aleatório? [S] Sim [N] Não");
+		P1 = TrainerFactory.aleatorio();
+		if (!Communicator.getBool()) {
+			P1 = getPlayerInfo(1, P1);
+			Communicator.passMessage("Olá, "+P1.toString());
+		}
+		
 		if (P1.getRoster().isEmpty()) {
 			P1.givePokemon(PokemonFactory.aleatorio());
 		}
