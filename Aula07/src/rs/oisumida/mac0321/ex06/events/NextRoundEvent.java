@@ -30,7 +30,9 @@ public class NextRoundEvent implements Event {
 		
 		controller.addEvent(new PlayerTurnEvent(P1, P2));
 		controller.addEvent(new PlayerTurnEvent(P2, P1));
-		controller.addEvent(new NextRoundEvent(P1, P2));
+		if (!P1.areAllFainted() && !P2.areAllFainted()) {
+			controller.addEvent(new NextRoundEvent(P1, P2));
+		}
 	}
 
 }

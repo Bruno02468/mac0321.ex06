@@ -1,5 +1,6 @@
 package rs.oisumida.mac0321.ex06;
 
+import rs.oisumida.mac0321.ex06.events.MapMove;
 import rs.oisumida.mac0321.ex06.events.NextRoundEvent;
 import rs.oisumida.mac0321.ex06.events.WildPokemonEvent;
 import rs.oisumida.mac0321.ex06.factories.PokemonFactory;
@@ -56,26 +57,14 @@ public class GameMain {
 	}
 
 	private void Solo() throws Throwable {
-		P1.givePokemon(PokemonFactory.aleatorio());
+		if (P1.getRoster().isEmpty()) {
+			P1.givePokemon(PokemonFactory.aleatorio());
+		}
+		
 		this.map = new Map(this.P1);
 		
-		while (true) {
-			Trainer wild = null;
-			Communicator.passMessage(this.map.toString());
-			while (true) {
-				try {
-					Direction dir = Communicator.getDirection();
-					wild = this.map.movePlayer(dir);
-					break;
-				} catch (Exception e) {
-					Communicator.passError(e.getMessage());
-				}
-			}
-			if (wild != null) {
-				controller.addEvent(new WildPokemonEvent(this.P1, wild));
-				controller.run();
-			}
-		}
+		controller.addEvent(new MapMove(this.P1, this.map));
+		controller.run();
 	}
 
 	Trainer getPlayerInfo(int num, Trainer player) {

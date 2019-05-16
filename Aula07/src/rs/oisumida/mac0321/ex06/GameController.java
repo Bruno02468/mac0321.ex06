@@ -53,4 +53,9 @@ public class GameController implements EventController {
 	public void stop() {
 		this.stopped = true;
 	}
+
+	@Override
+	public void removeEventByType(Class<?> class_to_remove) {
+		this.eventList.removeIf(evt -> evt.getClass().equals(class_to_remove));
+	}
 }

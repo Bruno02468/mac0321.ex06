@@ -118,4 +118,8 @@ public class Trainer {
 	public boolean getAutoPlay() {
 		 return this.auto_play;
 	}
+
+	public void removePokemon(Pokemon target) {
+		this.roster.remove(target);		
+	}
 }

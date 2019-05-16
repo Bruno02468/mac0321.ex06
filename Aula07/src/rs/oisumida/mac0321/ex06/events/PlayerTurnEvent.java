@@ -38,7 +38,6 @@ public class PlayerTurnEvent implements Event {
        wild_pokemon.attack(this.player.getCurrentPokemon(), wild_pokemon.getRandomMove());
        if (this.player.areAllFainted()) {
            Communicator.passMessage(this.player.getRoster().get(0).getName()+ " selvagem desmaiou!");
-           controller.addEvent(new EndBattleEvent(this.player, this.adversary));
            return;
        }
    }
@@ -48,7 +47,6 @@ public class PlayerTurnEvent implements Event {
 		this.player.printStats();
 		if (player.areAllFainted()) {
 			Communicator.passMessage(player.toString()+ " todos os seus pokemons desmaiaram!");
-			controller.addEvent(new EndBattleEvent(this.player, this.adversary));
 			return;
 		}
 		Action act = (Action) Communicator.askWhich(
@@ -56,7 +54,8 @@ public class PlayerTurnEvent implements Event {
 		Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
 		if (act == Action.FLEE) {
 			if (this.player.canFlee()) {
-				controller.addEvent(new EndBattleEvent(this.player, this.adversary));
+				controller.addEvent(new FleeEvent());
+				return;
 			} else {
 				Communicator.passMessage("Você não pode fugir!");
 			}

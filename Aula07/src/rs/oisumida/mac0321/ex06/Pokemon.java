@@ -188,4 +188,7 @@ public class Pokemon {
 	public void setTrainer(Trainer trainer) {
 		this.trainer = trainer;		
 	}
+	public Trainer getTrainer() {
+		return this.trainer;
+	}
 }

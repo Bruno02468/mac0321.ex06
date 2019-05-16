@@ -22,8 +22,8 @@ public class Pokeball extends Item {
 	
 	public boolean applyAs(Trainer player, Pokemon target) {
 		player.givePokemon(target);
+		target.getTrainer().removePokemon(target);
 		Communicator.passMessage(player + " capturou " + target);
 		return true;
 	}
-
 }

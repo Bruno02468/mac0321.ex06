@@ -4,4 +4,6 @@ public interface EventController {
 	public void addEvent(Event evt);
 
 	public void stop();
+
+	public void removeEventByType(Class<?> class_to_remove);
 }
