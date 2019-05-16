@@ -39,7 +39,7 @@ public class Pokemon {
 	  }
   
   public String toString() {
-	  return "<" + this.name + ">" + " L"+this.level+" HP "+this.hp+"/"+this.max_hp;
+	  return "<" + this.name + ">" + " L"+this.level+" HP "+this.hp+"/"+this.max_hp + " "+ProgressBar.toString(this.hp, this.max_hp, 8);
   }
   
   public String getName() {

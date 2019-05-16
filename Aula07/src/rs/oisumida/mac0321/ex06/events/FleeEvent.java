@@ -8,7 +8,6 @@ public class FleeEvent implements Event {
 
 	@Override
 	public void run(EventController controller) {
-		System.out.println("FleeEvent");
 		controller.removeEventByType(PlayerTurnEvent.class);
 		controller.removeEventByType(NextRoundEvent.class);
 	}
