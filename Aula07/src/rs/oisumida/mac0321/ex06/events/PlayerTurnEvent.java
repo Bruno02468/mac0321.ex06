@@ -2,7 +2,6 @@ package rs.oisumida.mac0321.ex06.events;
 
 import rs.oisumida.mac0321.ex06.Action;
 import rs.oisumida.mac0321.ex06.Communicator;
-import rs.oisumida.mac0321.ex06.MessageException;
 import rs.oisumida.mac0321.ex06.Pokemon;
 import rs.oisumida.mac0321.ex06.Trainer;
 

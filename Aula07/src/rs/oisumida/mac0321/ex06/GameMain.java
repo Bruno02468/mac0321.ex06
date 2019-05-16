@@ -9,7 +9,7 @@ public class GameMain {
 	Trainer P1, P2;
 	private Map map;
 	private GameController controller;
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		GameMain game = new GameMain();
 		game.controller = new GameController();
 		try {

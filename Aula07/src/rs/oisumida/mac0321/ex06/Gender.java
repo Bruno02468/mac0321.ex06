@@ -39,9 +39,9 @@ public enum Gender {
 		}
 		switch (this) {
 		case MALE:
-			return "👦🏻";
+			return "👦";
 		case FEMALE:
-			return "👧🏻";
+			return "👧";
 		default:
 			return "😺";
 		}
