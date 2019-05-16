@@ -9,6 +9,8 @@ public class Trainer {
 	private int money, current_pokemon;
 	private ArrayList<Pokemon> roster;
 	private ArrayList<ItemStack> bag;
+	private boolean setCanFlee;
+	private boolean auto_play=false;
 	
 	public Trainer(String name, Gender gender) {
 	  this(name, gender, 1000);
@@ -67,6 +69,7 @@ public class Trainer {
 	
 	public void givePokemon(Pokemon p) {
 	  if (roster.size() == GameConstants.MAX_ROSTER) return;
+	  p.setTrainer(this);
 	  roster.add(p);
 	}
 
@@ -93,11 +96,30 @@ public class Trainer {
 		}
 	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public void setCanFlee(boolean can_flee) {
+		this.setCanFlee = can_flee;
+	}
+	public boolean canFlee() {
+		return this.setCanFlee;
+	}
 
-  public void setGender(Gender gender) {
-    this.gender = gender;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public void setAutoPlay(boolean auto_play) {
+		 this.auto_play = auto_play;
+	}
+	
+	public boolean getAutoPlay() {
+		 return this.auto_play;
+	}
+
+	public void removePokemon(Pokemon target) {
+		this.roster.remove(target);		
+	}
 }

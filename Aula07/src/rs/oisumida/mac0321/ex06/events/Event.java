@@ -1,6 +1,7 @@
 package rs.oisumida.mac0321.ex06.events;
 
 public interface Event {
-	public int getPriority();
-	public void run();
+	static EventController MainController=null;
+	public abstract int getPriority();
+	public abstract void run(EventController controller) throws Throwable;
 }

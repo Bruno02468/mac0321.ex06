@@ -12,6 +12,7 @@ public class Pokemon {
   private ArrayList<Move> moves;
   public final int attack, special_attack, defense, special_defense, speed;
   private Type types[];
+  private Trainer trainer;
   
   public Pokemon(String name, int max_hp, int level,
       Gender gender, ArrayList<StatusEffect> effects,
@@ -30,9 +31,15 @@ public class Pokemon {
     this.types = types;
     this.moves = moves;
   }
+  public Pokemon(String name, int max_hp, int level,
+	      Gender gender, ArrayList<StatusEffect> effects,
+	      int a, int sa, int d, int sd, int spd, Type types[], ArrayList<Move> moves, Trainer trainer) {
+	    this(name, max_hp, level, gender, effects, a, sa, d, sd, spd, types, moves);
+	    this.trainer = trainer;
+	  }
   
   public String toString() {
-	  return this.name + " L"+this.level+" HP "+this.hp+"/"+this.max_hp;
+	  return "<" + this.name + ">" + " L"+this.level+" HP "+this.hp+"/"+this.max_hp + " "+ProgressBar.toString(this.hp, this.max_hp, 8);
   }
   
   public String getName() {
@@ -118,10 +125,18 @@ public class Pokemon {
     return 1;
   }
   
+  public String getQualifiedName() {
+	  if (trainer == null) {
+		  return name;
+	  } else {
+		  return "[" + trainer.toString() + "] " + name;
+	  }
+  }
+  
   // assume que pode ser usado
   public void attack(Pokemon target, Move m) {
     // avisar o uso
-    Communicator.passMessage(name + " usou " + m.getName() + "!");
+		  Communicator.passMessage(getQualifiedName() + " usou " + m.getName() + "!");
     // primeiro, ver se tem algum status effect que causa chance de erro
     for (StatusEffect se : effects) {
       if (se.hindrance == Hindrance.MISS
@@ -156,7 +171,7 @@ public class Pokemon {
     if (!target.isFainted() && m.doEffectChance()
       && !target.getEffects().contains(se)) {
       target.getEffects().add(se);
-      Communicator.passMessage(target.getName() + " agora está "
+      Communicator.passMessage(target.getQualifiedName() + " agora está "
         + se.getAdjective() + "!");
     }
   }
@@ -169,5 +184,11 @@ public class Pokemon {
 
 	public void printStats() {
 		System.out.println(this.toString());
+	}
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;		
+	}
+	public Trainer getTrainer() {
+		return this.trainer;
 	}
 }
