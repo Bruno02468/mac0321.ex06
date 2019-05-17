@@ -33,8 +33,8 @@ public class GameMain {
 	
 	private void Versus() throws Throwable {
 		System.out.println("Usar treinadores aleatórios? [S] Sim [N] Não");
-		P1 = TrainerFactory.aleatorio();
-		P2 = TrainerFactory.aleatorio();
+		P1 = TrainerFactory.aleatorio(true);
+		P2 = TrainerFactory.aleatorio(true);
 		if (!Communicator.getBool()) {
 			P1 = getPlayerInfo(1, P1);
 			Communicator.passMessage("Olá, "+P1.toString());
@@ -57,7 +57,7 @@ public class GameMain {
 
 	private void Solo() throws Throwable {
 		System.out.println("Usar treinador aleatório? [S] Sim [N] Não");
-		P1 = TrainerFactory.aleatorio();
+		P1 = TrainerFactory.aleatorio(false);
 		if (!Communicator.getBool()) {
 			P1 = getPlayerInfo(1, P1);
 			Communicator.passMessage("Olá, "+P1.toString());

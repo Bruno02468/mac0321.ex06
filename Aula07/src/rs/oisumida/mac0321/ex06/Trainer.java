@@ -67,10 +67,11 @@ public class Trainer {
 	  bag.add(new ItemStack(item, amount));
 	}
 	
-	public void givePokemon(Pokemon p) {
-	  if (roster.size() == GameConstants.MAX_ROSTER) return;
+	public boolean givePokemon(Pokemon p) {
+	  if (roster.size() == GameConstants.MAX_ROSTER) return false;
 	  p.setTrainer(this);
 	  roster.add(p);
+	  return true;
 	}
 
 	public Gender getGender() {
@@ -120,6 +121,14 @@ public class Trainer {
 	}
 
 	public void removePokemon(Pokemon target) {
-		this.roster.remove(target);		
+		if (this.roster.remove(target)) {
+			Communicator.passMessage(
+					this.gender.getColor() + this.name + Communicator.ANSI_RESET +
+					", você perdeu o pokemon " + target.getName());	
+		}
+	}
+
+	public String getName() {
+		return this.name;
 	}
 }

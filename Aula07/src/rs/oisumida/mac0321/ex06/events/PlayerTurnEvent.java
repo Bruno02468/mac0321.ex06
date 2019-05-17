@@ -45,7 +45,13 @@ public class PlayerTurnEvent implements Event {
 		Communicator.divider();
 		this.player.printStats();
 		if (player.areAllFainted()) {
-			Communicator.passMessage(player.toString()+ " todos os seus pokemons desmaiaram!");
+			Communicator.passMessage(player.toString()+ ", todos os seus pokemons desmaiaram!");
+			controller.addEvent(new EndFightEvent());
+			return;
+		}
+		if (adversary.areAllFainted()) {
+			Communicator.passMessage(adversary.toString()+ ", todos os seus pokemons desmaiaram!");
+			controller.addEvent(new EndFightEvent());
 			return;
 		}
 		Action act = (Action) Communicator.askWhich(
@@ -53,7 +59,7 @@ public class PlayerTurnEvent implements Event {
 		Communicator.passMessage(player.toString()+ " escolheu: "+act.toString());
 		if (act == Action.FLEE) {
 			if (this.player.canFlee()) {
-				controller.addEvent(new FleeEvent());
+				controller.addEvent(new EndFightEvent());
 				return;
 			} else {
 				Communicator.passMessage("Você não pode fugir!");

@@ -24,11 +24,20 @@ public class Pokeball extends Item {
 	
 	public boolean applyAs(Trainer player, Pokemon target) {
 	  if (captureAttempt(target)) {
-	    player.givePokemon(target);
-	    target.getTrainer().removePokemon(target);
-	    Communicator.passMessage("Você capturou " + target + "!");
+		Trainer adversary = target.getTrainer();
+	    boolean got = player.givePokemon(target);
+	    if (got) {
+	    	adversary.removePokemon(target);
+		    Communicator.passMessage(
+		    		player.getGender().getColor() + player.getName() + Communicator.ANSI_RESET +
+		    		" capturou " + target + "!");
+	    } else {
+	    	Communicator.passMessage(
+		    		player.getGender().getColor() + player.getName() + Communicator.ANSI_RESET +
+		    		" já tem pokemons demais!");
+	    }
 	  } else {
-	    Communicator.passMessage(target + " escapou da sua " + this);
+		  Communicator.passMessage(target + " escapou da sua " + this);
 	  }
 	  return true;
 	}
